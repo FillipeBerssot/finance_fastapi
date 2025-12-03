@@ -1,7 +1,7 @@
 from datetime import datetime, timedelta, timezone
 from typing import Any, Union
 
-import jwt
+from jose import jwt
 from passlib.context import CryptContext
 
 from app.core.config import settings
@@ -12,7 +12,8 @@ ALGORITHM = "HS256"
 
 
 def create_access_token(
-    subject: Union[str, Any], expires_delta: timedelta = None
+    subject: Union[str, Any], 
+    expires_delta: timedelta = None
 ) -> str:
     """
     Gera um token JWT com tempo de expiração.
