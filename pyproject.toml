@@ -6,11 +6,14 @@ authors = [
     {name = "fillipeberssot95@hotmail.com",email = "fillipeberssot95@hotmail.com"}
 ]
 readme = "README.md"
-requires-python = ">=3.12"
+requires-python = ">=3.12, <4.0"
 dependencies = [
     "fastapi (>=0.123.5,<0.124.0)",
     "uvicorn (>=0.38.0,<0.39.0)",
-    "pydantic-settings (>=2.12.0,<3.0.0)"
+    "pydantic-settings (>=2.12.0,<3.0.0)",
+    "sqlalchemy[asyncio] (>=2.0.44,<3.0.0)",
+    "psycopg[binary] (>=3.3.1,<4.0.0)",
+    "alembic (>=1.17.2,<2.0.0)"
 ]
 
 
@@ -18,6 +21,32 @@ dependencies = [
 requires = ["poetry-core>=2.0.0,<3.0.0"]
 build-backend = "poetry.core.masonry.api"
 
+
 [tool.poetry.group.dev.dependencies]
 ruff = "^0.14.7"
+taskipy = "^1.14.1"
+pytest = "^9.0.1"
 
+
+[tool.ruff]
+line-length = 88
+extend-exclude = ["migrations"]
+
+[tool.ruff.lint]
+preview = true
+# Regras que o Ruff vai verificar:
+# E = Erros de estilo (PEP8)
+# F = Erros lógicos (variável não usada, etc)
+# I = Importação (organizar imports automaticamente)
+# W = Avisos (Warnings)
+select = ["E", "F", "I", "W"]
+
+[tool.ruff.format]
+preview = true
+quote-style = "double"
+
+[tool.taskipy.tasks]
+run = "uvicorn app.main:app --reload"
+lint = "ruff check . && ruff check . --diff"
+format = "ruff check . --fix && ruff format ."
+test = "pytest -s -x -vv"
