@@ -30,7 +30,7 @@ pytest = "^9.0.1"
 
 [tool.ruff]
 line-length = 88
-extend-exclude = ["migrations"]
+extend-exclude = ["migrations", "env.py"]
 
 [tool.ruff.lint]
 preview = true
@@ -50,3 +50,6 @@ run = "uvicorn app.main:app --reload"
 lint = "ruff check . && ruff check . --diff"
 format = "ruff check . --fix && ruff format ."
 test = "pytest -s -x -vv"
+
+alembic_autogenerate = "alembic revision --autogenerate -m"
+alembic_upgrade = "alembic upgrade head"
